@@ -14,4 +14,4 @@ spring:
     name: config-service
 
     
-ver: 0.0 - dev
+ver: dev.2023.08.27
