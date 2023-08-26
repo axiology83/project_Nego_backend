@@ -11,9 +11,6 @@ jobs:
     runs-on: self-hosted
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
     - name: Download changed services list
       uses: actions/download-artifact@v2
       with:
@@ -23,7 +20,11 @@ jobs:
       run: |
         TAG="dev.$(date +'%Y.%m.%d')"
         CHANGED_SERVICES=$(cat changed_services.txt)
+        
         for service in $CHANGED_SERVICES; do
-          sed -i "s/IMAGE_TAG_PLACEHOLDER/$TAG/g" $service/deployment.yml
-          kubectl apply -f $service/deployment.yml
+          # Modify the deployment file as needed
+          sed -i "s/IMAGE_TAG_PLACEHOLDER/$TAG/g" /home/axiology/usershop/$service.yml
+
+          # Deploy to Kubernetes
+          kubectl apply -f /home/axiology/usershop/$service.yml
         done
