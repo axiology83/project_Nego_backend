@@ -14,6 +14,6 @@ jobs:
     - name: Deploy to Kubernetes
       run: |
         for file in /home/axiology/usedshop/*.yml ; do
-            sed -i "s/IMAGE_TAG_PLACEHOLDER/latest/g" $file
+            sed -i "s/IMAGE_TAG_PLACEHOLDER//g" $file
             kubectl apply -f $file
         done
