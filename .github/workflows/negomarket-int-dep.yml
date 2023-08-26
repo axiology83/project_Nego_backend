@@ -70,7 +70,7 @@ jobs:
     - name: Deploy to Kubernetes
       run: |
         TAG="dev.$(date +'%Y.%m.%d')"
-        CHANGED_SERVICES=$(cat changed_services/changed_services.txt)
+        CHANGED_SERVICES=$(cat /home/axiology/actions-runner/_work/project_Nego_backend/project_Nego_backend/changed_services.txt)
         for SERVICE in $CHANGED_SERVICES; do
           kubectl apply -f /home/axiology/usedshop/$SERVICE.yml
         done
