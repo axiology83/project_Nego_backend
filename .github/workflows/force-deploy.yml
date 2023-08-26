@@ -13,7 +13,12 @@ jobs:
 
     - name: Deploy to Kubernetes
       run: |
-        for file in /home/axiology/usedshop/*.yml ; do
-            sed -i "s/IMAGE_TAG_PLACEHOLDER/dev.2023.08.26/g" $file
-            kubectl apply -f $file
+        TAG="dev.$(date +'%Y.%m.%d')"
+        for file in /home/axiology/usedshop/*.yml; do
+          temp_file=$(mktemp)
+          cp $file $temp_file
+          sed -i "s/IMAGE_TAG_PLACEHOLDER/$TAG/g" $temp_file
+          kubectl apply -f $temp_file
+          rm $temp_file
         done
+
