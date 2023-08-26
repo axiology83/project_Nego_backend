@@ -1,0 +1,19 @@
+name: Manual Deploy
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Deploy to Kubernetes
+      run: |
+        for file in /home/axiology/usedshop/*.yml ; do
+            sed -i "s/IMAGE_TAG_PLACEHOLDER/latest/g" $file
+            kubectl apply -f $file
+        done
