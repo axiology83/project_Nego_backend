@@ -38,4 +38,4 @@ eureka:
 #      defaultZone: http://localhost:8761/eureka 
       defaultZone: http://discovery-service:8761/eureka
 
-ver: dev.2023.08.27.003
+ver: dev.2023.08.27.004
