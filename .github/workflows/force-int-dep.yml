@@ -26,7 +26,7 @@ jobs:
 
     - name: Build, Push and Check for Changes
       run: |
-        TAG="latest"
+        TAG="dev.2023.08.28.02:16"
         for dir in */ ; do
           if [ -f "$dir/pom.xml" ]; then
             APP_NAME=$(basename $dir)
