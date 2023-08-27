@@ -29,16 +29,13 @@ spring:
       
 eureka:
   instance:
-#    prefer-ip-address: true
     prefer-ip-address: false
-#    ip-address: 127.0.0.1
-    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    instance-id: ${spring.application.name}:${HOSTNAME}
   client:
     register-with-eureka: true
     fetch-registry: true 
     service-url:
-#      defaultZone: http://localhost:8761/eureka 
-      defaultZone: http://discovery-service:8761/eureka
+      defaultZone: http://discovery-service.default.svc.cluster.local:8761/eureka
       
       
 management:
@@ -47,4 +44,4 @@ management:
       exposure:
         include: refresh, health, beans, info
       
-ver: dev.2023.08.27.00
+ver: dev.2023.08.27.01
