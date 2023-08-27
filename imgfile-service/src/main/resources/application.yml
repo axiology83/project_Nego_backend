@@ -41,4 +41,4 @@ management:
       exposure:
         include: refresh, health, info, beans, env
 
-ver: dev.2023.08.28.01
+ver: dev.2023.08.28.00
