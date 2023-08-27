@@ -13,8 +13,7 @@ eureka:
 #    prefer-ip-address: true
     prefer-ip-address: false
 
-#    ip-address: 127.0.0.1
-#    hostname: localhost
+
 
     
 ver: dev.2023.08.27.01

@@ -35,7 +35,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true 
     service-url:
-      defaultZone: http://discovery-service.default.svc.cluster.local:8761/eureka
+      defaultZone: http://discovery-service-0.discovery-service.default.svc.cluster.local:8761/eureka
       
       
 management:

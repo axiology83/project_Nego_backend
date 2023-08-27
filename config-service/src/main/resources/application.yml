@@ -9,7 +9,7 @@ spring:
          uri: https://github.com/axiology83/usedshop-config.git
          username: username
          password: password
-         # uri: file:C:\\work\\git-repo
+         # uri: file:C:\\work\\git-repo (case: windows)
   application:
     name: config-service
 
