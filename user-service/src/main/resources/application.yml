@@ -47,7 +47,7 @@ logging:
   level:
     org.springframework: TRACE
 
-ver: dev.2023.08.28.00
+ver: dev.2023.08.28.01
 
 #data:
 #  SECRET_KEY: tj705team    
