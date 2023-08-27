@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class ChatRoomResponse {
 	private String requestSubject;
 	private String title;
-	private String username1;
-	private String username2;
+	private String email1;
+	private String email2;
 
 }

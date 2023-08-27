@@ -21,7 +21,7 @@ public class BoardDTO implements Serializable{
 	
 	private String sellId;
 	
-	private String username;
+	private String email;
 
 	private String title;
 	

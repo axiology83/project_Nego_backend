@@ -42,7 +42,7 @@ public class SellInfoServiceImpl implements SellInfoService {
 		
 		SellInfoDTO sellInfoDTO = SellInfoDTO.builder()
 				.id(sellInfoEntity.getId())
-				.username(sellInfoEntity.getUsername())
+				.email(sellInfoEntity.getEmail())
 				.productName(sellInfoEntity.getProductName())
 				.price(sellInfoEntity.getPrice())
 				.buyer(sellInfoEntity.getBuyer())
@@ -59,15 +59,15 @@ public class SellInfoServiceImpl implements SellInfoService {
 	}
 	
 	@Override
-	public List<SellInfoDTO> findByUsername(String username) {
+	public List<SellInfoDTO> findByEmail(String email) {
 		
 		
-		List<SellInfoEntity> entityList = sellInfoRepository.findByUsername(username);
+		List<SellInfoEntity> entityList = sellInfoRepository.findByEmail(email);
 		List<SellInfoDTO> dtoList = new ArrayList<>();
 		for (SellInfoEntity entity: entityList) {
 			SellInfoDTO sellInfoDTO = SellInfoDTO.builder()
 					.id(entity.getId())
-					.username(entity.getUsername())
+					.email(entity.getEmail())
 					.productName(entity.getProductName())
 					.price(entity.getPrice())
 					.buyer(entity.getBuyer())
@@ -92,7 +92,7 @@ public class SellInfoServiceImpl implements SellInfoService {
 		Date date = new Date();
 		SellInfoEntity entity = SellInfoEntity.builder()
 			
-				.username(dto.getUsername())
+				.email(dto.getEmail())
 				.buyer(dto.getBuyer())
 				.productName(dto.getProductName())
 				.price(dto.getPrice())
@@ -144,7 +144,7 @@ public class SellInfoServiceImpl implements SellInfoService {
 			
 		SellInfoEntity entity = SellInfoEntity.builder()
 				.id(orgEntity.getId())
-				.username(orgEntity.getUsername())
+				.email(orgEntity.getEmail())
 				.createAt(orgEntity.getCreateAt())
 				.buyer(dto.getBuyer())
 				.productName(dto.getProductName())
@@ -205,7 +205,7 @@ public class SellInfoServiceImpl implements SellInfoService {
 		
 		SellInfoDTO dto = SellInfoDTO.builder()
 				.id(entity.getId())
-				.username(entity.getUsername())
+				.email(entity.getEmail())
 				.buyer(entity.getBuyer())
 				.productName(entity.getProductName())
 				.price(entity.getPrice())
@@ -242,7 +242,7 @@ public class SellInfoServiceImpl implements SellInfoService {
 		
 		SellInfoDTO dto = SellInfoDTO.builder()
 				.id(entity.getId())
-				.username(entity.getUsername())
+				.email(entity.getEmail())
 				.buyer(entity.getBuyer())
 				.productName(entity.getProductName())
 				.price(entity.getPrice())
@@ -279,7 +279,7 @@ public class SellInfoServiceImpl implements SellInfoService {
 		
 		SellInfoDTO dto = SellInfoDTO.builder()
 				.id(entity.getId())
-				.username(entity.getUsername())
+				.email(entity.getEmail())
 				.buyer(entity.getBuyer())
 				.productName(entity.getProductName())
 				.price(entity.getPrice())
@@ -323,7 +323,7 @@ public class SellInfoServiceImpl implements SellInfoService {
 		
 		SellInfoDTO dto = SellInfoDTO.builder()
 				.id(entity.getId())
-				.username(entity.getUsername())
+				.email(entity.getEmail())
 				.createAt(entity.getCreateAt())
 				.buyer(entity.getBuyer())
 				.productName(entity.getProductName())
@@ -372,7 +372,7 @@ public class SellInfoServiceImpl implements SellInfoService {
 		    
 		    String sti = String.format("%04d", i);
 		    
-		    String username = "판매자" + sti;
+		    String email = "판매자" + sti;
 			String buyer = "구매자" + sti;
 			
 			String productName = null;
@@ -424,7 +424,7 @@ public class SellInfoServiceImpl implements SellInfoService {
 			// 드디어 변수들을 다 마련했습니다. Entity 만들어서 저장합시다.
 			
 			SellInfoEntity entity = SellInfoEntity.builder()
-					.username(username)
+					.email(email)
 					.buyer(buyer)
 					.productName(productName)
 					.price(price)
@@ -469,7 +469,7 @@ public class SellInfoServiceImpl implements SellInfoService {
 			
 			SellInfoDTO sellInfoDTO = SellInfoDTO.builder()
 					.id(sellInfoEntity.getId())
-					.username(sellInfoEntity.getUsername())
+					.email(sellInfoEntity.getEmail())
 					.productName(sellInfoEntity.getProductName())
 					.price(sellInfoEntity.getPrice())
 					.createAt(sellInfoEntity.getCreateAt())

@@ -78,7 +78,7 @@ public class BoardController {
 		BoardResponse boardResponse = BoardResponse.builder()
 				.id(boardDTO.getId())
 				.sellId(boardDTO.getSellId())
-				.username(boardDTO.getUsername())
+				.email(boardDTO.getEmail())
 				.title(boardDTO.getTitle())
 				.deltaString(boardDTO.getDeltaString())
 				.htmlString(boardDTO.getHtmlString())
@@ -95,7 +95,7 @@ public class BoardController {
 		String secKey = env.getProperty("data.SECRET_KEY");
 		String encodedSecKey = Base64.getEncoder().encodeToString(secKey.getBytes());
 
-		String username = Jwts.parser()
+		String email = Jwts.parser()
 				.setSigningKey(encodedSecKey)
 				.parseClaimsJws(token)
 				.getBody()
@@ -132,7 +132,7 @@ public class BoardController {
 		
 		SellInfoRequest sellInfoRequest = SellInfoRequest.builder()
 				.id(null)
-				.username(username)
+				.email(email)
 				.buyer(null)
 				.productName(productName)
 				.price(price)
@@ -166,7 +166,7 @@ public class BoardController {
 		
 		BoardRequest boardRequest = BoardRequest.builder()
 				.sellId(sellId)
-				.username(username)
+				.email(email)
 				.title(title)
 				.deltaString(deltaString)
 				.htmlString(htmlString)
@@ -174,7 +174,7 @@ public class BoardController {
 		
 		BoardDTO boardDTO = BoardDTO.builder()
 				.sellId(boardRequest.getSellId())
-				.username(boardRequest.getUsername())
+				.email(boardRequest.getEmail())
 				.title(boardRequest.getTitle())
 				.deltaString(boardRequest.getDeltaString())
 				.htmlString(boardRequest.getHtmlString())
@@ -201,7 +201,7 @@ public class BoardController {
 		String secKey = env.getProperty("data.SECRET_KEY");
 		String encodedSecKey = Base64.getEncoder().encodeToString(secKey.getBytes());
 
-		String username = Jwts.parser()
+		String email = Jwts.parser()
 				.setSigningKey(encodedSecKey)
 				.parseClaimsJws(token)
 				.getBody()
@@ -235,7 +235,7 @@ public class BoardController {
 				
 		SellInfoRequest sellInfoRequest = SellInfoRequest.builder()
 				.id(sellId)
-				.username(username)
+				.email(email)
 				.buyer(null)
 				.productName(productName)
 				.price(price)
@@ -267,7 +267,7 @@ public class BoardController {
 		
 		BoardRequest boardRequest = BoardRequest.builder()
 				.sellId(sellId)
-				.username(username)
+				.email(email)
 				.title(title)
 				.deltaString(deltaString)
 				.htmlString(htmlString)
@@ -275,7 +275,7 @@ public class BoardController {
 		
 		BoardDTO boardDTO = BoardDTO.builder()
 				.sellId(boardRequest.getSellId())
-				.username(boardRequest.getUsername())
+				.email(boardRequest.getEmail())
 				.title(boardRequest.getTitle())
 				.deltaString(boardRequest.getDeltaString())
 				.htmlString(boardRequest.getHtmlString())
@@ -305,7 +305,7 @@ public class BoardController {
 		String secKey = env.getProperty("data.SECRET_KEY");
 		String encodedSecKey = Base64.getEncoder().encodeToString(secKey.getBytes());
 
-		String username = Jwts.parser()
+		String email = Jwts.parser()
 				.setSigningKey(encodedSecKey)
 				.parseClaimsJws(token)
 				.getBody()
@@ -316,14 +316,14 @@ public class BoardController {
 		
 		BoardDTO boardDTO = boardService.findBySellId(sellId);
 		
-		if(!boardDTO.getUsername().equals(username)) {
+		if(!boardDTO.getEmail().equals(email)) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("삭제 권한 없음");
 		}
 				
 		
 		
 		UserFeignLoginRequest userFeignLoginRequest = UserFeignLoginRequest.builder()
-				.username(username)
+				.email(email)
 				.password(password)
 				.build();
 		
@@ -446,8 +446,8 @@ public class BoardController {
 		    int caseNum = i%5;
 		   
 		
-		    String username = "jwy" + caseNum;
-		    String buyer = "buy" + caseNum;
+		    String email = "jwy@" + caseNum;
+		    String buyer = "buyer@" + caseNum;
 			
 			String productName = null;
 			Long price = null;
@@ -492,12 +492,12 @@ public class BoardController {
 			Date updateAt = date;
 			
 			
-			// enum 설정 방법, 혹시 모르셨던 분은 참고!
+			
 			SellState sellState = SellState.ON_SALE;
 			
 			SellInfoRequest sellInfoRequest = SellInfoRequest.builder()
 					.id(null)
-					.username(username)
+					.email(email)
 					.buyer(buyer)
 					.productName(productName)
 					.price(price)
@@ -532,7 +532,7 @@ public class BoardController {
 			
 			BoardRequest boardRequest = BoardRequest.builder()
 					.sellId(sellId)
-					.username(username)
+					.email(email)
 					.title(title)
 					.deltaString(deltaString)
 					.htmlString(htmlString)
@@ -540,7 +540,7 @@ public class BoardController {
 			
 			BoardDTO boardDTO = BoardDTO.builder()
 					.sellId(boardRequest.getSellId())
-					.username(boardRequest.getUsername())
+					.email(boardRequest.getEmail())
 					.title(boardRequest.getTitle())
 					.deltaString(boardRequest.getDeltaString())
 					.htmlString(boardRequest.getHtmlString())
@@ -558,8 +558,10 @@ public class BoardController {
 	
 	@GetMapping("/health_check")
 	public String status() {
-			
-		return "MSA Board Service:   " + env.getProperty("version");
+		
+		return "Spring Cloud MSA [board-service]" + "ver." + env.getProperty("ver") + ", port: " + env.getProperty("local.server.port");
+		
+		
 	}
 
 	

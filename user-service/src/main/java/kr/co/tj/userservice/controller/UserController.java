@@ -169,7 +169,6 @@ public class UserController {
 
 
 
-	// 정보 상세보기
 	@GetMapping("/users/{email}")
 	public ResponseEntity<?> getUser(@PathVariable("email") String email) {
 		UserInfoDTO userInfoDTO = userInfoService.getUser(email);
@@ -178,7 +177,7 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.OK).body(userInfoResponse);
 	}
 
-	// 수정
+	
 	@PutMapping("/users")
 	public ResponseEntity<?> updateUser(@RequestBody UserInfoRequest userInfoRequest) {
 		String orgPassword = userInfoRequest.getOrgPassword();
@@ -205,7 +204,7 @@ public class UserController {
 		
 	}
 
-	// 삭제
+	
 	@DeleteMapping("/users")
 	public ResponseEntity<?> deleteUser(@RequestBody UserInfoRequest userInfoRequest) {
 		
@@ -219,15 +218,8 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
-	// 테스트용
-	@GetMapping("/health_check")
-	public String status() {
-		log.info("data.world: {}", env.getProperty("data.world"));
-		log.info("data.test: {}", env.getProperty("data.test"));
-		
-		
-		return "user service입니다" + env.getProperty("local.server.port");
-	}
+	
+	
 	
 	
 	
@@ -320,37 +312,48 @@ public class UserController {
 	
 	
 	
-
-	@PostMapping("/testinsert")
-	public void testinsert() {
-		System.out.println("테스트용 데이터를 여러개 주입합니다.");
-		System.out.println("테스트용 데이터를 여러개 주입합니다.");
-		System.out.println("테스트용 데이터를 여러개 주입합니다.");
-		System.out.println("테스트용 데이터를 여러개 주입합니다.");
-		System.out.println("테스트용 데이터를 여러개 주입합니다.");
+	@GetMapping("/health_check")
+	public String status() {
 		
-		Random rand = new Random();
-		for (int i = 1; i < 101; i++) {
-			
-			String idnum = String.format("%03d", i);
-			int year = rand.nextInt(3) + 2021;
-			int month = rand.nextInt(12) + 1;
-			int day = rand.nextInt(28) + 1;
-			Calendar cal = Calendar.getInstance();
-			cal.set(year, month-1, day);
-			Date date = cal.getTime();
-			
-			UserInfoDTO dto = UserInfoDTO.builder()
-					.email("m" + idnum)
-					.password("1")
-					.createAt(date)
-					.updateAt(date)
-					.build();
-			
-			userInfoService.testinsert(dto);
-			
-		}
-				
+		return "Spring Cloud MSA [user-service]" + "ver." + env.getProperty("ver") + ", port: " + env.getProperty("local.server.port");
+		
+		
 	}
+	
+	
+	
+	
+
+//	@PostMapping("/testinsert")
+//	public void testinsert() {
+//		System.out.println("테스트용 데이터를 여러개 주입합니다.");
+//		System.out.println("테스트용 데이터를 여러개 주입합니다.");
+//		System.out.println("테스트용 데이터를 여러개 주입합니다.");
+//		System.out.println("테스트용 데이터를 여러개 주입합니다.");
+//		System.out.println("테스트용 데이터를 여러개 주입합니다.");
+//		
+//		Random rand = new Random();
+//		for (int i = 1; i < 101; i++) {
+//			
+//			String idnum = String.format("%03d", i);
+//			int year = rand.nextInt(3) + 2021;
+//			int month = rand.nextInt(12) + 1;
+//			int day = rand.nextInt(28) + 1;
+//			Calendar cal = Calendar.getInstance();
+//			cal.set(year, month-1, day);
+//			Date date = cal.getTime();
+//			
+//			UserInfoDTO dto = UserInfoDTO.builder()
+//					.email("m" + idnum)
+//					.password("1")
+//					.createAt(date)
+//					.updateAt(date)
+//					.build();
+//			
+//			userInfoService.testinsert(dto);
+//			
+//		}
+//				
+//	}
 
 }

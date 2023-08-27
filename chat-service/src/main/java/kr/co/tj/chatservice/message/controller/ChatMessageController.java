@@ -97,5 +97,14 @@ public class ChatMessageController {
 		chatMessageService.saveAndSendMessage(dto);
 		
 	}
+	
+	@GetMapping("/health_check")
+	public String status() {
+		
+		return "Spring Cloud MSA [chat-service]" + "ver." + env.getProperty("ver") + ", port: " + env.getProperty("local.server.port");
+		
+		
+	}
+	
 
 }

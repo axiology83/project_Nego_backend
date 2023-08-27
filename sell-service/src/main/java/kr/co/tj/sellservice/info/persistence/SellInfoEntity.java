@@ -35,7 +35,7 @@ public class SellInfoEntity implements Serializable{
 	private String id;
 	
 	@Column(nullable = false)
-	private String username;
+	private String email;
 	private String buyer;
 	@Column(nullable = false)
 	private String productName;

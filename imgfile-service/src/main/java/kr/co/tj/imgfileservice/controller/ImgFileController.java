@@ -74,7 +74,9 @@ public class ImgFileController {
 	
 	@GetMapping("/health_check")
 	public String status() {
-		return "imgfile-service 입니다" + env.getProperty("local.server.port");
+		
+		return "Spring Cloud MSA [imgfile-service]" + "ver." + env.getProperty("ver") + ", port: " + env.getProperty("local.server.port");
+		
 	}
 	
 	

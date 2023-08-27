@@ -18,7 +18,7 @@ public interface SellInfoService {
 
 	List<SellInfoDTO> findAroundAll(Double longitude, Double latitude, Double rangeInKm);
 	
-	List<SellInfoDTO> findByUsername(String username);
+	List<SellInfoDTO> findByEmail(String email);
 	
 	SellInfoDTO reserve(String id, String buyer);
 

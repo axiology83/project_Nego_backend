@@ -22,7 +22,7 @@ public class BoardResponse implements Serializable{
 	
 	private String sellId;
 	
-	private String username;
+	private String email;
 
 	private String title;
 	

@@ -9,6 +9,6 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoomEntity, String
 
 	Optional<ChatRoomEntity> findByTitle(String title);
 
-	List<ChatRoomEntity> findByUsername1ContainingOrUsername2Containing(String username1, String username2);
+	List<ChatRoomEntity> findByEmail1ContainingOrEmail2Containing(String email1, String email2);
 
 }

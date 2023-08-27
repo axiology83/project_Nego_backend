@@ -9,13 +9,13 @@ import kr.co.tj.chatservice.room.dto.ChatRoomDTO;
 
 public interface ChatRoomService {
 
-	ChatRoomDTO insertRoom(String username1, String username2, ChatRoomDTO dto);
+	ChatRoomDTO insertRoom(String email1, String email2, ChatRoomDTO dto);
 
 	Map<String, Object> enter(String title);
 
 	String delete(String title);
 
-	List<ChatRoomDTO> findRoomsByUsername(String username);
+	List<ChatRoomDTO> findRoomsByEmail(String email);
 
 
 

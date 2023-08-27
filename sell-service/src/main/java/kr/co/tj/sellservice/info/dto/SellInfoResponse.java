@@ -16,7 +16,7 @@ public class SellInfoResponse {
 	
 	private String id;
 	
-	private String username;
+	private String email;
 	private String buyer;
 	private String productName;
 	private Long price;

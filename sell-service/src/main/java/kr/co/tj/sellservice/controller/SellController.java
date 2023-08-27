@@ -71,7 +71,7 @@ public class SellController {
 
 		SellInfoResponse sellInfoResponse = SellInfoResponse.builder()
 				.id(sellInfoDTO.getId())
-				.username(sellInfoDTO.getUsername())
+				.email(sellInfoDTO.getEmail())
 				.buyer(sellInfoDTO.getBuyer())
 				.productName(sellInfoDTO.getProductName())
 				.price(sellInfoDTO.getPrice())
@@ -113,10 +113,10 @@ public class SellController {
 		String secKey = env.getProperty("data.SECRET_KEY");
 		String encodedSecKey = Base64.getEncoder().encodeToString(secKey.getBytes());
 
-		String username;
+		String email;
 
 		try {
-			username = Jwts.parser()
+			email = Jwts.parser()
 					.setSigningKey(encodedSecKey)
 					.parseClaimsJws(token)
 					.getBody()
@@ -138,13 +138,13 @@ public class SellController {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
 
-		List<SellInfoDTO> dtoList = sellInfoService.findByUsername(username);
+		List<SellInfoDTO> dtoList = sellInfoService.findByEmail(email);
 
 		List<SellInfoResponse> responseList = new ArrayList<>();
 		for (SellInfoDTO dto : dtoList) {
 			SellInfoResponse response = SellInfoResponse.builder()
 					.id(dto.getId())
-					.username(dto.getUsername())
+					.email(dto.getEmail())
 					.productName(dto.getProductName())
 					.price(dto.getPrice())
 					.buyer(dto.getBuyer())
@@ -213,7 +213,7 @@ public class SellController {
 		
 		SellInfoResponse sellInfoResponse = SellInfoResponse.builder()
 				.id(sellInfoDTO.getId())
-				.username(sellInfoDTO.getUsername())
+				.email(sellInfoDTO.getEmail())
 				.buyer(sellInfoDTO.getBuyer())
 				.productName(sellInfoDTO.getProductName())
 				.price(sellInfoDTO.getPrice())
@@ -255,7 +255,7 @@ public class SellController {
 		SellImgRequest sellImgRequest = sellFeignRequest.getSellImgRequest();
 						
 		SellInfoDTO infoDTO = SellInfoDTO.builder()
-				.username(sellInfoRequest.getUsername())
+				.email(sellInfoRequest.getEmail())
 				.productName(sellInfoRequest.getProductName())
 				.price(sellInfoRequest.getPrice())
 				.longitude(sellInfoRequest.getLongitude())
@@ -268,7 +268,7 @@ public class SellController {
 		
 		SellInfoResponse infoResponse = SellInfoResponse.builder()
 				.id(infoDTO.getId())
-				.username(infoDTO.getUsername())
+				.email(infoDTO.getEmail())
 				.productName(infoDTO.getProductName())
 				.price(infoDTO.getPrice())
 				.createAt(infoDTO.getCreateAt())
@@ -307,7 +307,7 @@ public class SellController {
 
 		SellInfoDTO infoDTO = SellInfoDTO.builder()
 				.id(sellId)
-				.username(sellInfoRequest.getUsername())
+				.email(sellInfoRequest.getEmail())
 				.productName(sellInfoRequest.getProductName())
 				.price(sellInfoRequest.getPrice())
 				.longitude(sellInfoRequest.getLongitude())
@@ -318,7 +318,7 @@ public class SellController {
 
 		SellInfoResponse infoResponse = SellInfoResponse.builder()
 				.id(infoDTO.getId())
-				.username(infoDTO.getUsername())
+				.email(infoDTO.getEmail())
 				.productName(infoDTO.getProductName())
 				.price(infoDTO.getPrice())
 				.createAt(infoDTO.getCreateAt())
@@ -373,7 +373,7 @@ public class SellController {
 		String secKey = env.getProperty("data.SECRET_KEY");
 		String encodedSecKey = Base64.getEncoder().encodeToString(secKey.getBytes());
 
-		String username = Jwts.parser()
+		String email = Jwts.parser()
 				.setSigningKey(encodedSecKey)
 				.parseClaimsJws(token)
 				.getBody()
@@ -392,7 +392,7 @@ public class SellController {
 			
 				
 		SellInfoDTO infoDTO = SellInfoDTO.builder()
-				.username(username)
+				.email(email)
 				.productName(productName)
 				.price(price)
 				.longitude(longitude)
@@ -404,7 +404,7 @@ public class SellController {
 		
 		SellInfoResponse infoResponse = SellInfoResponse.builder()
 				.id(infoDTO.getId())
-				.username(infoDTO.getUsername())
+				.email(infoDTO.getEmail())
 				.productName(infoDTO.getProductName())
 				.price(infoDTO.getPrice())
 				.createAt(infoDTO.getCreateAt())
@@ -435,7 +435,7 @@ public class SellController {
 		
 		SellInfoDTO dto = SellInfoDTO.builder()
 				.id(request.getId())
-				.username(request.getUsername())
+				.email(request.getEmail())
 				.buyer(request.getBuyer())
 				.productName(request.getProductName())
 				.price(request.getPrice())
@@ -448,7 +448,7 @@ public class SellController {
 		
 		SellInfoResponse response = SellInfoResponse.builder()
 				.id(dto.getId())
-				.username(dto.getUsername())
+				.email(dto.getEmail())
 				.buyer(dto.getBuyer())
 				.productName(dto.getProductName())
 				.price(dto.getPrice())
@@ -656,7 +656,7 @@ public class SellController {
 		SellInfoDTO sellInfoDTO = sellInfoService.isReviewed(id, sellInfoRequest.isReviewed());
 		SellInfoResponse sellInfoResponse = SellInfoResponse.builder()
 				.id(sellInfoDTO.getId())
-				.username(sellInfoDTO.getUsername())
+				.email(sellInfoDTO.getEmail())
 				.createAt(sellInfoDTO.getCreateAt())
 				.buyer(sellInfoDTO.getBuyer())
 				.productName(sellInfoDTO.getProductName())
@@ -688,10 +688,10 @@ public class SellController {
 		String secKey = env.getProperty("data.SECRET_KEY");
 		String encodedSecKey = Base64.getEncoder().encodeToString(secKey.getBytes());
 
-		String username;
+		String email;
 
 		try {
-			username = Jwts.parser()
+			email = Jwts.parser()
 					.setSigningKey(encodedSecKey)
 					.parseClaimsJws(token)
 					.getBody()
@@ -724,7 +724,7 @@ public class SellController {
 		String buyer = sellInfoRequest.getBuyer();
 		SellInfoDTO orgDTO = sellInfoService.findBySellId(id);
 
-		if (!username.equals(orgDTO.getUsername())) {
+		if (!email.equals(orgDTO.getEmail())) {
 			
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
@@ -738,7 +738,7 @@ public class SellController {
 
 		SellInfoResponse sellInfoResponse = SellInfoResponse.builder()
 				.id(sellInfoDTO.getId())
-				.username(sellInfoDTO.getUsername())
+				.email(sellInfoDTO.getEmail())
 				.createAt(sellInfoDTO.getCreateAt())
 				.sellState(sellInfoDTO.getSellState())
 				.buyer(sellInfoDTO.getBuyer())
@@ -770,10 +770,10 @@ public class SellController {
 		String secKey = env.getProperty("data.SECRET_KEY");
 		String encodedSecKey = Base64.getEncoder().encodeToString(secKey.getBytes());
 
-		String username;
+		String email;
 
 		try {
-			username = Jwts.parser()
+			email = Jwts.parser()
 					.setSigningKey(encodedSecKey)
 					.parseClaimsJws(token)
 					.getBody()
@@ -804,7 +804,7 @@ public class SellController {
 		String buyer = sellInfoRequest.getBuyer();
 		SellInfoDTO orgDTO = sellInfoService.findBySellId(id);
 		
-		if (!username.equals(orgDTO.getUsername())) {
+		if (!email.equals(orgDTO.getEmail())) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
 		
@@ -817,7 +817,7 @@ public class SellController {
 
 		SellInfoResponse sellInfoResponse = SellInfoResponse.builder()
 				.id(sellInfoDTO.getId())
-				.username(sellInfoDTO.getUsername())
+				.email(sellInfoDTO.getEmail())
 				.createAt(sellInfoDTO.getCreateAt())
 				.sellState(sellInfoDTO.getSellState())
 				.buyer(sellInfoDTO.getBuyer())
@@ -848,10 +848,10 @@ public class SellController {
 		String secKey = env.getProperty("data.SECRET_KEY");
 		String encodedSecKey = Base64.getEncoder().encodeToString(secKey.getBytes());
 
-		String username;
+		String email;
 
 		try {
-			username = Jwts.parser()
+			email = Jwts.parser()
 					.setSigningKey(encodedSecKey)
 					.parseClaimsJws(token)
 					.getBody()
@@ -884,7 +884,7 @@ public class SellController {
 		String id = sellInfoRequest.getId();
 		SellInfoDTO orgDTO = sellInfoService.findBySellId(id);
 		
-		if (!username.equals(orgDTO.getUsername())) {
+		if (!email.equals(orgDTO.getEmail())) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
 
@@ -897,7 +897,7 @@ public class SellController {
 
 		SellInfoResponse sellInfoResponse = SellInfoResponse.builder()
 				.id(sellInfoDTO.getId())
-				.username(sellInfoDTO.getUsername())
+				.email(sellInfoDTO.getEmail())
 				.createAt(sellInfoDTO.getCreateAt())
 				.sellState(sellInfoDTO.getSellState())
 				.buyer(sellInfoDTO.getBuyer())
@@ -952,6 +952,14 @@ public class SellController {
 	public void testinsert(int trialNum, double range) {
 		
 		sellInfoService.testinsert(trialNum, range);
+		
+	}
+	
+	@GetMapping("/health_check")
+	public String status() {
+		
+		return "Spring Cloud MSA [sell-service]" + "ver." + env.getProperty("ver") + ", port: " + env.getProperty("local.server.port");
+		
 		
 	}
 	

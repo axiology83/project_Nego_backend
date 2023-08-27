@@ -45,23 +45,23 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 	}
 
 	@Override
-	public ChatRoomDTO insertRoom(String username1, String username2, ChatRoomDTO dto) {
+	public ChatRoomDTO insertRoom(String email1, String email2, ChatRoomDTO dto) {
 
-		ChatRoomEntity entity = ChatRoomEntity.builder().title(dto.getTitle()).username1(dto.getUsername1())
-				.username2(dto.getUsername2()).build();
+		ChatRoomEntity entity = ChatRoomEntity.builder().title(dto.getTitle()).email1(dto.getEmail1())
+				.email2(dto.getEmail2()).build();
 
 		entity = chatRoomRepository.save(entity);
 		
 		ChatRoomResponse chatRoomResponse= ChatRoomResponse.builder()
 		.requestSubject("")
 		.title(entity.getTitle())
-		.username1(entity.getUsername1())
-		.username2(entity.getUsername2())
+		.email1(entity.getEmail1())
+		.email2(entity.getEmail2())
 		.build();
 		
 		
-		messagingTemplate.convertAndSend("/sub/chatroomnotify/" + username1, chatRoomResponse);
-		messagingTemplate.convertAndSend("/sub/chatroomnotify/" + username2, chatRoomResponse);
+		messagingTemplate.convertAndSend("/sub/chatroomnotify/" + email1, chatRoomResponse);
+		messagingTemplate.convertAndSend("/sub/chatroomnotify/" + email2, chatRoomResponse);
 
 
 		dto.setId(entity.getId());
@@ -70,7 +70,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 
 	}
 
-	// 사용자 2명의 username을 이용하여 만든 방제로 검색하여, 해당 대화방이 존재할 경우
+	// 사용자 2명의 email을 이용하여 만든 방제로 검색하여, 해당 대화방이 존재할 경우
 	// 대화내용을 포함한 dto객체를 반환하고
 	// 존재하지 않을 경우, null을 반환함.
 	@Override
@@ -89,7 +89,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 
 		ChatRoomEntity entity = optional.get();
 		ChatRoomDTO dto = ChatRoomDTO.builder().id(entity.getId()).title(entity.getTitle())
-				.username1(entity.getUsername1()).username2(entity.getUsername2()).build();
+				.email1(entity.getEmail1()).email2(entity.getEmail2()).build();
 
 		List<ChatMessageEntity> list = chatMessageRepository.findByRoomTitle(entity.getTitle());
 		List<ChatMessageResponse> messageList = new ArrayList<>();
@@ -148,18 +148,18 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 	}
 
 	@Override
-	public List<ChatRoomDTO> findRoomsByUsername(String username) {
+	public List<ChatRoomDTO> findRoomsByEmail(String email) {
 		
 		
 		List<ChatRoomDTO> chatRoomDTOList = new ArrayList<>();
-		List<ChatRoomEntity> chatRoomEntityList = chatRoomRepository.findByUsername1ContainingOrUsername2Containing(username, username);
+		List<ChatRoomEntity> chatRoomEntityList = chatRoomRepository.findByEmail1ContainingOrEmail2Containing(email, email);
 		for(ChatRoomEntity x : chatRoomEntityList) {
 			
 			ChatRoomDTO chatRoomDTO = ChatRoomDTO.builder()
 					.id(x.getId())
 					.title(x.getTitle())
-					.username1(x.getUsername1())
-					.username2(x.getUsername2())
+					.email1(x.getEmail1())
+					.email2(x.getEmail2())
 					.build();
 			chatRoomDTOList.add(chatRoomDTO);
 		}

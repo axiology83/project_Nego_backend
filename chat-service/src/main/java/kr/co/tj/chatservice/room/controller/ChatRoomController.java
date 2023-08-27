@@ -58,7 +58,7 @@ public class ChatRoomController {
 		String secKey = env.getProperty("data.SECRET_KEY");
 		String encodedSecKey = Base64.getEncoder().encodeToString(secKey.getBytes());
 
-		String username = Jwts.parser()
+		String email = Jwts.parser()
 				.setSigningKey(encodedSecKey)
 				.parseClaimsJws(token)
 				.getBody()
@@ -66,16 +66,16 @@ public class ChatRoomController {
 		
 		
 		
-		String username1 = username;
-		String username2 = chatRoomRequest.getUsername2();
+		String email1 = email;
+		String email2 = chatRoomRequest.getEmail2();
 		
 
 		
-		String[] users = { username1, username2 };
-		Arrays.sort(users);
-		username1 = users[0];
-		username2 = users[1];
-		String title = username1 + "-" + username2;
+		String[] emails = { email1, email2 };
+		Arrays.sort(emails);
+		email1 = emails[0];
+		email2 = emails[1];
+		String title = email1 + "-" + email2;
 
 		Map<String, Object> map = chatRoomService.enter(title);
 
@@ -83,17 +83,17 @@ public class ChatRoomController {
 			Map<String, Object> responseMap = new HashMap<>();
 			ChatRoomDTO dto = ChatRoomDTO.builder()
 					.title(title)
-					.username1(username1)
-					.username2(username2)
+					.email1(email1)
+					.email2(email2)
 					.build();
 
-			dto = chatRoomService.insertRoom(username1, username2, dto);
+			dto = chatRoomService.insertRoom(email1, email2, dto);
 			
 			ChatRoomResponse response = ChatRoomResponse.builder()
-					.requestSubject(username)
+					.requestSubject(email)
 					.title(dto.getTitle())
-					.username1(dto.getUsername1())
-					.username2(dto.getUsername2())
+					.email1(dto.getEmail1())
+					.email2(dto.getEmail2())
 					.build();
 			responseMap.put("isExist", false);
 			responseMap.put("roomInfo", response);
@@ -104,10 +104,10 @@ public class ChatRoomController {
 		
 		ChatRoomDTO dto = (ChatRoomDTO)map.get("roomInfo");
 		ChatRoomResponse response = ChatRoomResponse.builder()
-				.requestSubject(username)
+				.requestSubject(email)
 				.title(dto.getTitle())
-				.username1(dto.getUsername1())
-				.username2(dto.getUsername2())
+				.email1(dto.getEmail1())
+				.email2(dto.getEmail2())
 				.build();
 		
 		map.put("roomInfo", response);
@@ -162,7 +162,7 @@ public class ChatRoomController {
 		
 		
 		
-		List<ChatRoomDTO> chatRoomDTOList = chatRoomService.findRoomsByUsername(username);
+		List<ChatRoomDTO> chatRoomDTOList = chatRoomService.findRoomsByEmail(username);
 		
 		if(chatRoomDTOList.size() > 0 ) {
 		
@@ -173,8 +173,8 @@ public class ChatRoomController {
 			ChatRoomResponse chatRoomResponse = ChatRoomResponse.builder()
 					.requestSubject(username)
 					.title(x.getTitle())
-					.username1(x.getUsername1())
-					.username2(x.getUsername2())
+					.email1(x.getEmail1())
+					.email2(x.getEmail2())
 					.build();
 			
 			chatRoomResponseList.add(chatRoomResponse);

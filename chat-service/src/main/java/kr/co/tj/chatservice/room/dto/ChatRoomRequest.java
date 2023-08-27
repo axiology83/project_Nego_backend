@@ -16,8 +16,8 @@ public class ChatRoomRequest {
 	
 	private String title;
 	
-	private String username1;
-	private String username2;
+	private String email1;
+	private String email2;
 	
 
 }

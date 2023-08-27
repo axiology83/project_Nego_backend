@@ -13,6 +13,6 @@ public interface SellInfoRepository extends JpaRepository<SellInfoEntity, String
 			Double longitude1, Double longitude2,
 			Double latitude1, Double latitude2);
 
-	List<SellInfoEntity> findByUsername(String Username);
+	List<SellInfoEntity> findByEmail(String Email);
 
 }

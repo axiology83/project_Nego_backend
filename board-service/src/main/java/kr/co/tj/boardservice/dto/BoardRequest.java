@@ -13,7 +13,7 @@ public class BoardRequest {
 	
 	private String sellId;
 	
-	private String username;
+	private String email;
 	
 	private String title;
 	

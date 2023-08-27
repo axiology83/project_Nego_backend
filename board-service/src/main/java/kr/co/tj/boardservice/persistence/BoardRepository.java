@@ -11,9 +11,9 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Long>{
 
 
 
-	void deleteByUsername(String username);
+	void deleteByEmail(String email);
 
-	List<BoardEntity> findByUsername(String username);
+	List<BoardEntity> findByEmail(String email);
 
 	Page<BoardEntity> findByTitleContainingOrHtmlStringContaining(String keyword, String keyword2, Pageable pageable);
 
