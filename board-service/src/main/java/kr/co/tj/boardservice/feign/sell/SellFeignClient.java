@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 
-@FeignClient(name = "sell-service")
+@FeignClient(name = "sell-service.default.svc.cluster.local")
 public interface SellFeignClient {
 	
 	
