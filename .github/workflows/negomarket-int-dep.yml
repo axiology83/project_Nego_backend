@@ -68,15 +68,14 @@ jobs:
         name: changed_services
 
     - name: Deploy to Kubernetes
-      - name: Deploy to Kubernetes
-        run: |
-          TAG="dev.$(date +'%Y.%m.%d')"
-          CHANGED_SERVICES=$(cat /home/axiology/actions-runner/_work/project_Nego_backend/project_Nego_backend/changed_services.txt)
-          for SERVICE in $CHANGED_SERVICES; do
-            temp_file=$(mktemp)
-            cp /home/axiology/usedshop/$SERVICE.yml $temp_file
-            sed -i "s/IMAGE_TAG_PLACEHOLDER/$TAG/g" $temp_file
-            kubectl apply -f $temp_file
-            rm $temp_file
-          done
+      run: |
+        TAG="dev.$(date +'%Y.%m.%d')"
+        CHANGED_SERVICES=$(cat /home/axiology/actions-runner/_work/project_Nego_backend/project_Nego_backend/changed_services.txt)
+        for SERVICE in $CHANGED_SERVICES; do
+          temp_file=$(mktemp)
+          cp /home/axiology/usedshop/$SERVICE.yml $temp_file
+          sed -i "s/IMAGE_TAG_PLACEHOLDER/$TAG/g" $temp_file
+          kubectl apply -f $temp_file
+          rm $temp_file
+        done
 
