@@ -37,7 +37,6 @@ jobs:
             docker push ${{ secrets.DOCKERHUB_USERNAME }}/$APP_NAME:$TAG
             CHANGED_SERVICES="$CHANGED_SERVICES $APP_NAME"
           fi
-         fi
         done
 
 
