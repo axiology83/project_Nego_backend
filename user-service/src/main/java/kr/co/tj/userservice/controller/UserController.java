@@ -134,12 +134,14 @@ public class UserController {
 			
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
+			String name = request.getParameter("name");
 			Double longitude = Double.parseDouble(request.getParameter("longitude"));
 			Double latitude = Double.parseDouble(request.getParameter("latitude"));
 			
 			UserInfoDTO userInfoDTO = UserInfoDTO.builder()
 					.email(email)
 					.password(password)
+					.name(name)
 					.longitude(longitude)
 					.latitude(latitude)
 					.build();
@@ -148,6 +150,7 @@ public class UserController {
 			
 			UserInfoResponse userInfoResponse = UserInfoResponse.builder()
 					.email(userInfoDTO.getEmail())
+					.name(userInfoDTO.getName())
 					.longitude(userInfoDTO.getLongitude())
 					.latitude(userInfoDTO.getLatitude())
 					.createAt(userInfoDTO.getCreateAt())

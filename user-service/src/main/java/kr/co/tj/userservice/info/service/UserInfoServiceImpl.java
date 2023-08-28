@@ -81,7 +81,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 	}
 	
 
-	// 회원가입
+	// 회원 가입
 	@Override
 	@Transactional
 	public UserInfoDTO insertUser(UserInfoDTO userInfoDTO) {
@@ -93,6 +93,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 		UserInfoEntity userInfoEntity = UserInfoEntity.builder()
 				.email(userInfoDTO.getEmail())
 				.password(encPassword)
+				.name(userInfoDTO.getName())
 				.longitude(userInfoDTO.getLongitude())
 				.latitude(userInfoDTO.getLatitude())
 				.createAt(date)
