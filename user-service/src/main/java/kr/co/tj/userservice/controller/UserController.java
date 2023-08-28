@@ -98,7 +98,7 @@ public class UserController {
 		userInfoDTO = userInfoService.login(userInfoDTO);
 		
 		if(userInfoDTO == null) {
-			map.put("result", "사용자명이나 비밀번호가 잘못되었습니다.");
+			map.put("result", "이메일이나 비밀번호가 잘못되었습니다.");
 			return ResponseEntity.ok().body(map);
 		}
 		

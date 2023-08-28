@@ -29,6 +29,16 @@ public class TokenProvider {
 		Date today = new Date(now);
 		Date expireDate = new Date(now + 1000*60*60*24*365);
 		String str = env.getProperty("data.SECRET_KEY");
+		
+		System.out.println("::::::::::::::::data.SECRET_KEY::::::::::::::::::::::");
+
+		System.out.println(env.getProperty("data.SECRET_KEY"));
+		System.out.println(env.getProperty("data.SECRET_KEY"));
+		System.out.println(env.getProperty("data.SECRET_KEY"));
+		System.out.println(env.getProperty("data.SECRET_KEY"));
+		
+		System.out.println("::::::::::::::::data.SECRET_KEY::::::::::::::::::::::");
+		
 		String encodedStr = Base64.getEncoder().encodeToString(str.getBytes());
 		
 		return Jwts.builder()
