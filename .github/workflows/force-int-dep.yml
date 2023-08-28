@@ -26,7 +26,7 @@ jobs:
 
     - name: Build, Push and Check for Changes
       run: |
-        TAG="dev.2023.08.28.05"
+        TAG="dev.2023.08.28.06"
         for dir in */ ; do
           if [ -f "$dir/pom.xml" ]; then
             APP_NAME=$(basename $dir)
@@ -46,7 +46,7 @@ jobs:
     
     - name: Deploy to Kubernetes
       run: |
-        TAG="dev.2023.08.28.05"
+        TAG="dev.2023.08.28.06"
          for file in /home/axiology/usedshop/*.yml; do
           temp_file=$(mktemp)
           cp $file $temp_file
