@@ -6,12 +6,20 @@ spring:
   application:
     name: board-service
     
-  h2:
-    console:
-      enabled: true 
-      settings:
-        web-allow-others: true
-      path: /h2-console
+#  h2:
+#    console:
+#      enabled: true 
+#      settings:
+#        web-allow-others: true
+#      path: /h2-console
+  
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://axiology.iptime.org:3306/negodb?serverTimezone=Asia/Seoul
+    username: axiology
+    password: #dpsldkr#
+  
+  
       
   jpa:
     hibernate:
@@ -21,11 +29,7 @@ spring:
     show-sql: true
     generate-ddl: true
       
-  datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
-    username: sa
-    password: 
+  
       
 eureka:
   instance:
