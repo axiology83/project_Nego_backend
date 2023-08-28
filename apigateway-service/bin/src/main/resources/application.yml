@@ -4,6 +4,19 @@ server:
 spring:
   application:
     name: apigateway-service
+ 
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: client-id
+            client-secret: client-secret
+            redirect-uri: "redirect-uri"
+            scope: 
+              - email
+              - profile
+
     
   cloud:
     gateway:
@@ -11,21 +24,25 @@ spring:
         add-to-simple-url-handler-mapping: true
         cors-configurations:
           '[/**]':
-            allowedOrigins: 
-              - "http://localhost:3000"
-              - "http://axiology.iptime.org:3000"
-              - "http://reactserver:80"
-             
+            allowedOrigins: "http://localhost:3000"
             allowedHeaders: '*'
             allow-credentials: true
-            allowedMethods: POST, GET, PUT, DELETE
-      x-forwarded:
-        host-enabled: true
-        port-enabled: true
+            allowedMethods: POST, GET, PUT, DELETE, OPTIONS
+    
           
         
             
       routes:
+      
+      
+      - id: board-service
+        uri: lb://BOARD-SERVICE
+        predicates:
+        - Path=/user-service/h2-console
+        - Method=GET
+        filters:
+        - RemoveRequestHeader=Cookie
+        - RewritePath=/user-service/(?<segment>.*), /$\{segment}
       
           
       # board-service
@@ -35,6 +52,16 @@ spring:
         - Path=/board-service/** #유저가 브라우저 주소창에 http://localhost:8000/user-service/users 입력 user-service를 보고 id를 확인하고 uri로 넘어감
         - Method=GET, POST, PUT, DELETE
         
+      - id: sell-service
+        uri: lb://SELL-SERVICE
+        predicates:
+        - Path=/sell-service/h2-console
+        - Method=GET
+        filters:
+        - RemoveRequestHeader=Cookie
+        - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+      
+      
       # sell-service
       - id: sell-service #순서 2번
         uri: lb://SELL-SERVICE #순서 3번
@@ -42,12 +69,14 @@ spring:
         - Path=/sell-service/** #순서 1번   
         - Method=GET, POST, PUT, DELETE
         
-      # review-service
-      - id: review-service 
-        uri: lb://REVIEW-SERVICE 
+      - id: chat-service
+        uri: lb://CHAT-SERVICE
         predicates:
-        - Path=/review-service/**   
-        - Method=GET, POST, PUT, DELETE
+        - Path=/chat-service/h2-console
+        - Method=GET
+        filters:
+        - RemoveRequestHeader=Cookie
+        - RewritePath=/user-service/(?<segment>.*), /$\{segment}
       
       
        # chat-service 
@@ -76,6 +105,14 @@ spring:
         - Path=/chat-service/** #순서 1번   
         - Method=GET, POST, PUT, DELETE
         
+      - id: imgfile-service
+        uri: lb://IMGFILE-SERVICE
+        predicates:
+        - Path=/imgfile-service/h2-console
+        - Method=GET
+        filters:
+        - RemoveRequestHeader=Cookie
+        - RewritePath=/user-service/(?<segment>.*), /$\{segment}
        
       - id: imgfile-service 
         uri: lb://IMGFILE-SERVICE 
@@ -85,21 +122,37 @@ spring:
         
         # user-service
         
+      - id: user-service
+        uri: lb://USER-SERVICE
+        predicates:
+        - Path=/user-service/h2-console
+        - Method=GET
+        filters:
+        - RemoveRequestHeader=Cookie
+        - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+        
+        
+      - id: user-service 
+        uri: lb://USER-SERVICE 
+        predicates:
+        - Path=/oauth2/**
+        - Method=GET, POST
+      
+      
       - id: user-service 
         uri: lb://USER-SERVICE 
         predicates:
         - Path=/user-service/o/oauth2/auth
         - Method=GET, POST
-        
-       
+    
         
       - id: user-service 
         uri: lb://USER-SERVICE 
         predicates:
         - Path=/user-service/login/oauth2/code/google/**
         - Method=GET, POST
-   
-        
+    
+     
         
       - id: user-service 
         uri: lb://USER-SERVICE 
@@ -175,25 +228,25 @@ spring:
       
 eureka:
   instance:
-    prefer-ip-address: true
-    ip-address: localhost
-    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    prefer-ip-address: false
+    instance-id: ${HOSTNAME}
   client:
-    register-with-eureka: true 
+    register-with-eureka: true
     fetch-registry: true 
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://discovery-service-0.discovery-service.default.svc.cluster.local:8761/eureka
       
 management:
   endpoints:
     web:
       exposure:
-        include: refresh, health, info, beans
+        include: refresh, health, info, beans, env
 
 logging:
   level:
-    org.springframework: TRACE
+    org.springframework: INFO
 
 
+ver: dev.2023.08.28.00
 #data:
 #  SECRET_KEY: tj705team

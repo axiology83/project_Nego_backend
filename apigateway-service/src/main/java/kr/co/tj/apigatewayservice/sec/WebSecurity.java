@@ -39,6 +39,8 @@ public class WebSecurity {
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) throws Exception{
         
 		http
+		    .csrf()
+		    .disable()
             .authorizeExchange()
 //            .pathMatchers("/o/oauth2/auth").authenticated()
             .anyExchange().permitAll()
