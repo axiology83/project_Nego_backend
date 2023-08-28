@@ -24,7 +24,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://axiology.iptime.org:3306/negodb?serverTimezone=Asia/Seoul
     username: axiology
-    password: #dpsldkr#
+    password: "#dpsldkr#"
     
     
 
