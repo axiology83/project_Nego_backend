@@ -209,7 +209,7 @@ management:
 
 logging:
   level:
-    org.springframework: TRACE
+    org.springframework: DEBUG
 
 
 ver: dev.2023.08.28.03
