@@ -1,9 +1,5 @@
 spring:
   cloud:
     config:
-      uri: http://config-service-0.config-service.default.svc.cluster.local:8888
+      uri: http://localhost:8888
       name: usedshop
-
-
-  profiles:
-    active: dev

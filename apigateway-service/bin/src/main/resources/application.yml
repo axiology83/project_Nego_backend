@@ -4,19 +4,6 @@ server:
 spring:
   application:
     name: apigateway-service
- 
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            client-id: client-id
-            client-secret: client-secret
-            redirect-uri: "redirect-uri"
-            scope: 
-              - email
-              - profile
-
     
   cloud:
     gateway:
@@ -27,146 +14,57 @@ spring:
             allowedOrigins: "http://localhost:3000"
             allowedHeaders: '*'
             allow-credentials: true
-            allowedMethods: POST, GET, PUT, DELETE, OPTIONS
-    
-          
-        
+            allowedMethods: POST, GET, PUT, DELETE
             
       routes:
       
-      
-      - id: board-service
-        uri: lb://BOARD-SERVICE
+      - id: user-service
+        uri: lb://USER-SERVICE
         predicates:
-        - Path=/user-service/h2-console
-        - Method=GET
+        - Path=/user-service/actuator/**
+        - Method=GET, POST
         filters:
         - RemoveRequestHeader=Cookie
         - RewritePath=/user-service/(?<segment>.*), /$\{segment}
       
-          
-      # board-service
+      
+      
+      #홍구님 보드 서비스
       - id: board-service
         uri: lb://BOARD-SERVICE
         predicates:
         - Path=/board-service/** #유저가 브라우저 주소창에 http://localhost:8000/user-service/users 입력 user-service를 보고 id를 확인하고 uri로 넘어감
         - Method=GET, POST, PUT, DELETE
         
-      - id: sell-service
-        uri: lb://SELL-SERVICE
+        #홍구님 카테고리서비스
+      - id: category-service #순서 2번
+        uri: lb://CATEGORY-SERVICE #순서 3번
         predicates:
-        - Path=/sell-service/h2-console
-        - Method=GET
-        filters:
-        - RemoveRequestHeader=Cookie
-        - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-      
-      
-      # sell-service
-      - id: sell-service #순서 2번
-        uri: lb://SELL-SERVICE #순서 3번
-        predicates:
-        - Path=/sell-service/** #순서 1번   
+        - Path=/category-service/** #순서 1번   
         - Method=GET, POST, PUT, DELETE
         
-      - id: chat-service
-        uri: lb://CHAT-SERVICE
+        # 정호님 리뷰서비스
+      - id: review-service 
+        uri: lb://REVIEW-SERVICE 
         predicates:
-        - Path=/chat-service/h2-console
-        - Method=GET
-        filters:
-        - RemoveRequestHeader=Cookie
-        - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-      
-      
-       # chat-service 
-      - id: chat-service #순서 2번
-        uri: lb:ws://CHAT-SERVICE/ #순서 3번
-        predicates:
-        - Path=/chat-service/wsstomp #순서 1번   
+        - Path=/review-service/**   
         - Method=GET, POST, PUT, DELETE
-
-      
-      
-      
-#      # chat-service 
-#      - id: chat-service #순서 2번
-#        uri: lb:ws://CHAT-SERVICE/ #순서 3번
-#        predicates:
-#        - Path=/chat-service/wsstomp #순서 1번   
-#        filters:
-#        - RewritePath=/chat-service/(?<segment>.*), /$\{segment}
-       
         
-      
+        #종봉님 챗서비스
       - id: chat-service #순서 2번
         uri: lb://CHAT-SERVICE #순서 3번
         predicates:
         - Path=/chat-service/** #순서 1번   
         - Method=GET, POST, PUT, DELETE
         
-      - id: imgfile-service
-        uri: lb://IMGFILE-SERVICE
-        predicates:
-        - Path=/imgfile-service/h2-console
-        - Method=GET
-        filters:
-        - RemoveRequestHeader=Cookie
-        - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-       
+        #종봉님 이미지파일 서비스
       - id: imgfile-service 
         uri: lb://IMGFILE-SERVICE 
         predicates:
         - Path=/imgfile-service/**   
         - Method=GET, POST, PUT, DELETE
         
-        # user-service
-        
-      - id: user-service
-        uri: lb://USER-SERVICE
-        predicates:
-        - Path=/user-service/h2-console
-        - Method=GET
-        filters:
-        - RemoveRequestHeader=Cookie
-        - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-        
-        
-      - id: user-service 
-        uri: lb://USER-SERVICE 
-        predicates:
-        - Path=/oauth2/**
-        - Method=GET, POST
-      
-      
-      - id: user-service 
-        uri: lb://USER-SERVICE 
-        predicates:
-        - Path=/user-service/o/oauth2/auth
-        - Method=GET, POST
-    
-        
-      - id: user-service 
-        uri: lb://USER-SERVICE 
-        predicates:
-        - Path=/user-service/login/oauth2/code/google/**
-        - Method=GET, POST
-    
-     
-        
-      - id: user-service 
-        uri: lb://USER-SERVICE 
-        predicates:
-        - Path=/user-service/tokenValidation
-        - Method=GET
-        
-      - id: user-service 
-        uri: lb://USER-SERVICE 
-        predicates:
-        - Path=/user-service/pwvalidation
-        - Method=POST
-        
-           
+        # user-service   
       - id: user-service 
         uri: lb://USER-SERVICE 
         predicates:
@@ -179,17 +77,6 @@ spring:
         - Path=/user-service/login 
         - Method=POST
         
-     
-
-        
-     
-        
-      - id: user-service 
-        uri: lb://USER-SERVICE 
-        predicates:
-        - Path=/user-service/pic/*
-        - Method=GET
-        
       - id: user-service 
         uri: lb://USER-SERVICE 
         predicates:
@@ -201,52 +88,47 @@ spring:
         predicates:
         - Path=/user-service/health_check
         - Method=GET
-        
-      - id: user-service
-        uri: lb://USER-SERVICE
-        predicates:
-        - Path=/user-service/actuator/**
-        - Method=GET, POST
-        filters:
-        - RemoveRequestHeader=Cookie
-        - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-      
 
       - id: user-service 
         uri: lb://USER-SERVICE 
         predicates:
         - Path=/user-service/**   
         - Method=GET, POST, PUT, DELETE
-#        filters:
-#        - name: AuthorizationFilter
-#  
+        filters:
+        - name: AuthorizationFilter
+     
       
- 
         
- 
+        #유정님 큐앤에이서비스     
+      - id: qna-service 
+        uri: lb://QNA-SERVICE 
+        predicates:
+        - Path=/QNA-service/**   
+        - Method=GET, POST, PUT, DELETE
+        
+        #윤주님 레코드서비스
+      - id: record-service 
+        uri: lb://RECORD-SERVICE 
+        predicates:
+        - Path=/record-service/**   
+        - Method=GET, POST, PUT, DELETE
       
       
 eureka:
   instance:
-    prefer-ip-address: false
-    instance-id: ${HOSTNAME}
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
   client:
-    register-with-eureka: true
+    register-with-eureka: true 
     fetch-registry: true 
     service-url:
-      defaultZone: http://discovery-service-0.discovery-service.default.svc.cluster.local:8761/eureka
+      defaultZone: http://localhost:8761/eureka
       
 management:
   endpoints:
     web:
       exposure:
-        include: refresh, health, info, beans, env
+        include: refresh, health, beans
 
-logging:
-  level:
-    org.springframework: INFO
-
-
-ver: dev.2023.08.28.00
 #data:
 #  SECRET_KEY: tj705team
