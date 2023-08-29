@@ -34,7 +34,7 @@ public class WebSecurity {
 
 
 
-
+/* 필터는 임시로 무효 처리
 	@Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) throws Exception{
         
@@ -53,7 +53,7 @@ public class WebSecurity {
         return http.build();
     }
 	
-	
+	*/
 	
 	
 //	@Bean
