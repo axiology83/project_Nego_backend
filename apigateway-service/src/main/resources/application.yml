@@ -4,6 +4,19 @@ server:
 spring:
   application:
     name: apigateway-service
+ 
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: client-id
+            client-secret: client-secret
+            redirect-uri: "redirect-uri"
+            scope: 
+              - email
+              - profile
+
     
   cloud:
     gateway:
@@ -17,8 +30,14 @@ spring:
             allowedHeaders: '*'
             allow-credentials: true
             allowedMethods: POST, GET, PUT, DELETE
+    
+          
+        
             
       routes:
+      
+      
+     
       
           
       # board-service
@@ -28,6 +47,9 @@ spring:
         - Path=/board-service/** #유저가 브라우저 주소창에 http://localhost:8000/user-service/users 입력 user-service를 보고 id를 확인하고 uri로 넘어감
         - Method=GET, POST, PUT, DELETE
         
+     
+      
+      
       # sell-service
       - id: sell-service #순서 2번
         uri: lb://SELL-SERVICE #순서 3번
@@ -35,13 +57,26 @@ spring:
         - Path=/sell-service/** #순서 1번   
         - Method=GET, POST, PUT, DELETE
         
-    
+ 
       
-      # chat-service 
+      
+       # chat-service 
       - id: chat-service #순서 2번
         uri: lb:ws://CHAT-SERVICE/ #순서 3번
         predicates:
         - Path=/chat-service/wsstomp #순서 1번   
+        - Method=GET, POST, PUT, DELETE
+
+      
+      
+      
+#      # chat-service 
+#      - id: chat-service #순서 2번
+#        uri: lb:ws://CHAT-SERVICE/ #순서 3번
+#        predicates:
+#        - Path=/chat-service/wsstomp #순서 1번   
+#        filters:
+#        - RewritePath=/chat-service/(?<segment>.*), /$\{segment}
        
         
       
@@ -50,15 +85,53 @@ spring:
         predicates:
         - Path=/chat-service/** #순서 1번   
         - Method=GET, POST, PUT, DELETE
-        
-        #종봉님 이미지파일 서비스
+
+       
       - id: imgfile-service 
         uri: lb://IMGFILE-SERVICE 
         predicates:
         - Path=/imgfile-service/**   
         - Method=GET, POST, PUT, DELETE
         
-        # user-service   
+        # user-service
+        
+
+        
+      - id: user-service 
+        uri: lb://USER-SERVICE 
+        predicates:
+        - Path=/oauth2/**
+        - Method=GET, POST
+      
+      
+      - id: user-service 
+        uri: lb://USER-SERVICE 
+        predicates:
+        - Path=/user-service/o/oauth2/auth
+        - Method=GET, POST
+    
+        
+      - id: user-service 
+        uri: lb://USER-SERVICE 
+        predicates:
+        - Path=/user-service/login/oauth2/code/google/**
+        - Method=GET, POST
+    
+     
+        
+      - id: user-service 
+        uri: lb://USER-SERVICE 
+        predicates:
+        - Path=/user-service/tokenValidation
+        - Method=GET
+        
+      - id: user-service 
+        uri: lb://USER-SERVICE 
+        predicates:
+        - Path=/user-service/pwvalidation
+        - Method=POST
+        
+           
       - id: user-service 
         uri: lb://USER-SERVICE 
         predicates:
@@ -70,6 +143,11 @@ spring:
         predicates:
         - Path=/user-service/login 
         - Method=POST
+        
+     
+
+        
+     
         
       - id: user-service 
         uri: lb://USER-SERVICE 
@@ -104,9 +182,9 @@ spring:
         predicates:
         - Path=/user-service/**   
         - Method=GET, POST, PUT, DELETE
-        filters:
-        - name: AuthorizationFilter
-     
+#        filters:
+#        - name: AuthorizationFilter
+#  
       
  
         
@@ -127,13 +205,13 @@ management:
   endpoints:
     web:
       exposure:
-        include: refresh, health, info, beans
+        include: refresh, health, info, beans, env
 
 logging:
   level:
     org.springframework: TRACE
 
-ver: dev.2023.08.28.03
 
+ver: dev.2023.08.28.03
 #data:
 #  SECRET_KEY: tj705team
