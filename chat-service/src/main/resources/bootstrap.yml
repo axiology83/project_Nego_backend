@@ -1,0 +1,8 @@
+spring:
+  cloud:
+    config:
+      uri: http://axiology.iptime.org:8888
+      name: usedshop
+
+  profiles:
+    active: dev

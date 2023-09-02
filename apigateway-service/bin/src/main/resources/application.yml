@@ -1,0 +1,252 @@
+server:
+  port: 8000
+  
+spring:
+  application:
+    name: apigateway-service
+ 
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: client-id
+            client-secret: client-secret
+            redirect-uri: "redirect-uri"
+            scope: 
+              - email
+              - profile
+
+    
+  cloud:
+    gateway:
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:3000"
+            allowedHeaders: '*'
+            allow-credentials: true
+            allowedMethods: POST, GET, PUT, DELETE, OPTIONS
+    
+          
+        
+            
+      routes:
+      
+      
+      - id: board-service
+        uri: lb://BOARD-SERVICE
+        predicates:
+        - Path=/user-service/h2-console
+        - Method=GET
+        filters:
+        - RemoveRequestHeader=Cookie
+        - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+      
+          
+      # board-service
+      - id: board-service
+        uri: lb://BOARD-SERVICE
+        predicates:
+        - Path=/board-service/** #유저가 브라우저 주소창에 http://localhost:8000/user-service/users 입력 user-service를 보고 id를 확인하고 uri로 넘어감
+        - Method=GET, POST, PUT, DELETE
+        
+      - id: sell-service
+        uri: lb://SELL-SERVICE
+        predicates:
+        - Path=/sell-service/h2-console
+        - Method=GET
+        filters:
+        - RemoveRequestHeader=Cookie
+        - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+      
+      
+      # sell-service
+      - id: sell-service #순서 2번
+        uri: lb://SELL-SERVICE #순서 3번
+        predicates:
+        - Path=/sell-service/** #순서 1번   
+        - Method=GET, POST, PUT, DELETE
+        
+      - id: chat-service
+        uri: lb://CHAT-SERVICE
+        predicates:
+        - Path=/chat-service/h2-console
+        - Method=GET
+        filters:
+        - RemoveRequestHeader=Cookie
+        - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+      
+      
+       # chat-service 
+      - id: chat-service #순서 2번
+        uri: lb:ws://CHAT-SERVICE/ #순서 3번
+        predicates:
+        - Path=/chat-service/wsstomp #순서 1번   
+        - Method=GET, POST, PUT, DELETE
+
+      
+      
+      
+#      # chat-service 
+#      - id: chat-service #순서 2번
+#        uri: lb:ws://CHAT-SERVICE/ #순서 3번
+#        predicates:
+#        - Path=/chat-service/wsstomp #순서 1번   
+#        filters:
+#        - RewritePath=/chat-service/(?<segment>.*), /$\{segment}
+       
+        
+      
+      - id: chat-service #순서 2번
+        uri: lb://CHAT-SERVICE #순서 3번
+        predicates:
+        - Path=/chat-service/** #순서 1번   
+        - Method=GET, POST, PUT, DELETE
+        
+      - id: imgfile-service
+        uri: lb://IMGFILE-SERVICE
+        predicates:
+        - Path=/imgfile-service/h2-console
+        - Method=GET
+        filters:
+        - RemoveRequestHeader=Cookie
+        - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+       
+      - id: imgfile-service 
+        uri: lb://IMGFILE-SERVICE 
+        predicates:
+        - Path=/imgfile-service/**   
+        - Method=GET, POST, PUT, DELETE
+        
+        # user-service
+        
+      - id: user-service
+        uri: lb://USER-SERVICE
+        predicates:
+        - Path=/user-service/h2-console
+        - Method=GET
+        filters:
+        - RemoveRequestHeader=Cookie
+        - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+        
+        
+      - id: user-service 
+        uri: lb://USER-SERVICE 
+        predicates:
+        - Path=/oauth2/**
+        - Method=GET, POST
+      
+      
+      - id: user-service 
+        uri: lb://USER-SERVICE 
+        predicates:
+        - Path=/user-service/o/oauth2/auth
+        - Method=GET, POST
+    
+        
+      - id: user-service 
+        uri: lb://USER-SERVICE 
+        predicates:
+        - Path=/user-service/login/oauth2/code/google/**
+        - Method=GET, POST
+    
+     
+        
+      - id: user-service 
+        uri: lb://USER-SERVICE 
+        predicates:
+        - Path=/user-service/tokenValidation
+        - Method=GET
+        
+      - id: user-service 
+        uri: lb://USER-SERVICE 
+        predicates:
+        - Path=/user-service/pwvalidation
+        - Method=POST
+        
+           
+      - id: user-service 
+        uri: lb://USER-SERVICE 
+        predicates:
+        - Path=/user-service/users
+        - Method=POST
+        
+      - id: user-service 
+        uri: lb://USER-SERVICE 
+        predicates:
+        - Path=/user-service/login 
+        - Method=POST
+        
+     
+
+        
+     
+        
+      - id: user-service 
+        uri: lb://USER-SERVICE 
+        predicates:
+        - Path=/user-service/pic/*
+        - Method=GET
+        
+      - id: user-service 
+        uri: lb://USER-SERVICE 
+        predicates:
+        - Path=/user-service/testinsert
+        - Method=POST
+      
+      - id: user-service 
+        uri: lb://USER-SERVICE 
+        predicates:
+        - Path=/user-service/health_check
+        - Method=GET
+        
+      - id: user-service
+        uri: lb://USER-SERVICE
+        predicates:
+        - Path=/user-service/actuator/**
+        - Method=GET, POST
+        filters:
+        - RemoveRequestHeader=Cookie
+        - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+      
+
+      - id: user-service 
+        uri: lb://USER-SERVICE 
+        predicates:
+        - Path=/user-service/**   
+        - Method=GET, POST, PUT, DELETE
+#        filters:
+#        - name: AuthorizationFilter
+#  
+      
+ 
+        
+ 
+      
+      
+eureka:
+  instance:
+    prefer-ip-address: false
+    instance-id: ${HOSTNAME}
+  client:
+    register-with-eureka: true
+    fetch-registry: true 
+    service-url:
+      defaultZone: http://discovery-service-0.discovery-service.default.svc.cluster.local:8761/eureka
+      
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, health, info, beans, env
+
+logging:
+  level:
+    org.springframework: INFO
+
+
+ver: dev.2023.08.28.00
+#data:
+#  SECRET_KEY: tj705team

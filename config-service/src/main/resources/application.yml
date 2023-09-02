@@ -1,0 +1,20 @@
+server:
+  port: 8888
+  
+spring:
+  cloud:
+    config:
+      server:
+       git:
+         uri: https://github.com/axiology83/usedshop-config.git
+         username: username
+         password: password
+         # uri: file:C:\\work\\git-repo (case: windows)
+  application:
+    name: config-service
+
+logging:
+  level:
+    org.springframework: INFO
+    
+ver: dev.0.0

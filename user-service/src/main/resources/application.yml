@@ -1,0 +1,56 @@
+server:
+  port: 0 # 0번 port를 사용하겠다는 의가 아님. 사용되지 않는 port번호를 임의로 할당해달라는 의미...
+ 
+spring:
+  application:
+    name: user-service
+    
+#  h2: # h2 데이터베이스 설정
+#    console:
+#      enabled: true # 브라우저에에서 콘솔을 볼 수 있게 하겠다.
+#      settings:
+#        web-allow-others: true
+#      path: /h2-console # url
+      
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+    generate-ddl: true 
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://axiology.iptime.org:3306/negodb?serverTimezone=Asia/Seoul
+    username: axiology
+    password: "#dpsldkr#"
+    
+    
+
+      
+eureka:
+  instance:
+    prefer-ip-address: false
+    instance-id: ${HOSTNAME}
+  client:
+    register-with-eureka: true
+    fetch-registry: true 
+    service-url:
+      defaultZone: http://discovery-service-0.discovery-service.default.svc.cluster.local:8761/eureka
+      
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, health, info, beans, env
+
+    
+logging:
+  level:
+    org.springframework: DEBUG
+
+ver: dev.0.0
+
+#data:
+#  SECRET_KEY: tj705team    
