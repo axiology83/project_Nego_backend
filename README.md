@@ -48,7 +48,7 @@ Github 레파지토리 입니다. Nego Project 라고 이름을 붙여 보았죠
 
 
 <br><br>
-지금 보고 계시는 페이지는 BackEnd Server 페이지 입니다.
+지금 보고 계시는 페이지는 BackEnd Web Server 페이지 입니다.
 <br><br>
 
 # 실제로 사용해볼 수 있나요?
