@@ -35,15 +35,19 @@ Github 레파지토리 입니다. Nego Project 라고 이름을 붙여 보았죠
 <br>
 프로젝트는 교육과정에 맞게 크게 4 부분으로 구성하였습니다.<br><br>
 
-- Spring Cloud 기반의 MSA로 개발된 BackEnd Web Server - [https://github.com/axiology83/project_Nego_backend]
+- Spring Cloud 기반의 MSA로 개발된 BackEnd Web Server <br>[https://github.com/axiology83/project_Nego_backend]
 
-- React로 개발된 FrontEnd Web Server - [https://github.com/axiology83/project_Nego_frontend]
+- React로 개발된 FrontEnd Web Server <br>[https://github.com/axiology83/project_Nego_frontend]
 
-- Flutter로 개발된 Mobile App - [https://github.com/axiology83/project_Nego_mobileapp]
+- Flutter로 개발된 Mobile App <br>[https://github.com/axiology83/project_Nego_mobileapp]
+
+- kubernetes 기반으로 구성된 소규모 On-Premise Server:<br>
+  2대의 미니 PC와 1대의 구형(2015년식) 맥북을 이용해서 kubeadm으로 쿠버네티스 환경을 직접 구축해 보았습니다.
+  <br><br>
+  <img width="522" alt="server" src="https://github.com/axiology83/project_Nego_backend/assets/132986829/97478e01-f1ee-407e-a485-9ae985a8aac9">
+
+
 <br><br>
-
-- kubernetes 기반으로 구성된 소규모 On-Premise Server
-
 지금 보고 계시는 페이지는 BackEnd Server 페이지 입니다.
 <br><br>
 
