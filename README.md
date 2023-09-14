@@ -24,6 +24,10 @@ Github 레파지토리 입니다. Nego Project 라고 이름을 붙여 보았죠
 <br><br>
 
 위 세 가지 기능을 제대로 구현해보려고 했습니다.
+간단히 Flutter Application으로 구현된 부분을 보여드리겠습니다.
+<br><br>
+![find_by_range](https://github.com/axiology83/project_Nego_backend/assets/132986829/876f33a3-ffef-4641-bbaf-8b530039e158)
+![Chat_with_img](https://github.com/axiology83/project_Nego_backend/assets/132986829/404f74ee-c270-418c-b94f-79b82b7198c7)
 
 <br><br>
 
